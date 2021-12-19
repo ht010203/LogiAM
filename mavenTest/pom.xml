@@ -8,13 +8,63 @@
   <artifactId>mavenTest</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-
-
-
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>com.maven.test.MavenMain</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <!-- 这是最新版本，推荐使用这个版本 -->
+        <version>2.5.1</version>
+        <executions>
+          <execution>
+            <id>assemble</id>
+            <goals>
+              <!--只运行一次 -->
+              <goal>single</goal>
+            </goals>
+            <!--绑定package生命周期 -->
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <appendAssemblyId>false</appendAssemblyId>
+          <attach>false</attach>
+          <!-- maven assembly插件需要一个描述文件 来告诉插件包的结构以及打包所需的文件来自哪里 -->
+          <descriptors>
+            <descriptor>src/main/assembly/assembly.xml</descriptor>
+          </descriptors>
+          <finalName>maven-assemble-test</finalName>
+          <outputDirectory>${project.build.directory}</outputDirectory>
+        </configuration>
+      </plugin>
+
+
+    </plugins>
+  </build>
 
 
 
