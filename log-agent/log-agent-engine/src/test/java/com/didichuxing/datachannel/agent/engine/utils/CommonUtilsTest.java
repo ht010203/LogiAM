@@ -17,7 +17,6 @@ public class CommonUtilsTest {
     public void decodeAndEnCode() {
         String encodeString = CommonUtils.encode(baseString);
         System.out.println(encodeString);
-
         assertTrue(baseString.equals(CommonUtils.decode(encodeString)));
     }
 

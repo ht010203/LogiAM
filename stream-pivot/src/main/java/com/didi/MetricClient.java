@@ -1,6 +1,6 @@
 package com.didi;
 
-import okhttp3.MediaType;
+import com.google.common.net.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 
 public class MetricClient {
     private static final Logger log = LoggerFactory.getLogger(MetricClient.class);
@@ -35,18 +36,17 @@ public class MetricClient {
         }
     }
 
-    public String write(String requestBody) throws IOException {
-        log.info("POST {}", this.url);
-        log.info("{}", requestBody);
-
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(requestBody, mediaType);
-        Request request = builder.post(body).build();
-
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
-        }
-    }
+    //public String write(String requestBody ) throws IOException {
+    //    log.info("POST {}", this.url);
+    //    log.info("{}", requestBody);
+    //    MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+    //    RequestBody body = RequestBody.create(mediaType,requestBody);
+    //    Request request = builder.post(body).build();
+    //
+    //    try (Response response = client.newCall(request).execute()) {
+    //        return response.body().string();
+    //    }
+    //}
 
     public MetricClient(String index) {
         this.url = "http://" + address + "/" + index + "/_doc";

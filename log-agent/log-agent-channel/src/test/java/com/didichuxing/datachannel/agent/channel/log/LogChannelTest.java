@@ -75,7 +75,7 @@ public class LogChannelTest {
     }
 
     private LogChannel getChannel() {
-        LogPath logPath = new LogPath(1L, 1L, "/home/test/test.log");
+        LogPath logPath = new LogPath(1L, 1L, "/Users/mac/Desktop/ht/work/LogiAM/info/output.log");
         LogSource logSource = new LogSource(new ModelConfig("log2Kafka"), logPath);
         LogChannel logChannel = new LogChannel(logSource, new ChannelConfig());
         return logChannel;

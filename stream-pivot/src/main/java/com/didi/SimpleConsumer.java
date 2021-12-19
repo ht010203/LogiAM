@@ -14,7 +14,7 @@ public class SimpleConsumer {
 //        private static String topicName = "errlog";
 //    private static String topicName = "LogX_channel_1331";
 //    private static final String address = "10.190.33.217:9092";
-    private static final String address = "10.255.1.144:9092";
+    private static final String address = "36.137.212.30:9094，36.137.212.135:9094,36.138.131.168:9094";
 //    private static final String address = "10.178.24.118:8092";
     private static String group = "d2";
 

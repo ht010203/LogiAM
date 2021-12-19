@@ -43,8 +43,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LogSource extends AbstractSource {
 
-    private static final Logger      LOGGER           = LoggerFactory.getLogger(LogSource.class
-                                                          .getName());
+    private static final Logger      LOGGER           = LoggerFactory.getLogger(LogSource.class.getName());
     private final Object             lock             = new Object();
     private int                      num;
 
