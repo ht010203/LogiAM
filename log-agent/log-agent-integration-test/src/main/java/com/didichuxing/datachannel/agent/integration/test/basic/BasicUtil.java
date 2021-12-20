@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 public class BasicUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicUtil.class);
+
     private static BasicUtil   instance    = new BasicUtil();
 
     private Random             randPortGen = new Random(System.currentTimeMillis());
@@ -51,6 +52,9 @@ public class BasicUtil {
         }
     }
 
+    /**
+     * 删除日志数据
+     */
     private void removeData() {
         LOGGER.info("starting remove zk and kafka data.");
         Properties kafkaProperties = new Properties();
@@ -63,16 +67,23 @@ public class BasicUtil {
             String path = System.getProperty("user.dir");
 
             File zkDir = new File(path + "/" + zkDirPath + "/version-2");
+            LOGGER.info("zk data path :  %s",zkDir.getPath());
             FileUtils.deleteDirectory(zkDir);
 
             File kafkaDir = new File(path + "/" + kafkaDirPath + "/kafka-logs");
+            LOGGER.info("kafak data path : %s ",kafkaDir.getPath());
             FileUtils.deleteDirectory(kafkaDir);
+            LOGGER.info("remoce zk and kafka data is Compelete");
 
         } catch (Exception e) {
             LOGGER.error("remove zk and kafka data error", e);
         }
     }
 
+    /**
+     * 启动kafka服务
+     * @return
+     */
     private boolean startKafkaServer() {
         Properties kafkaProperties = new Properties();
         Properties zkProperties = new Properties();
@@ -122,6 +133,10 @@ public class BasicUtil {
         }
     }
 
+    /**
+     * 初始化topic
+     * @param topics
+     */
     public void initTopicList(List<String> topics) {
         for (String topic : topics) {
             if (consuemrMap.get(topic) == null) {
@@ -130,11 +145,20 @@ public class BasicUtil {
         }
     }
 
+    /**
+     * 获取topic消息记录
+     * @param topic
+     * @return
+     */
     public ConsumerRecords<String, String> getNextMessageFromConsumer(String topic) {
         return consuemrMap.get(topic).getNextMessage(topic);
     }
 
+    /**
+     * 准备服务
+     */
     public void prepare() {
+        //删除遗留数据
         removeData();
         boolean startStatus = startKafkaServer();
         if (!startStatus) {
@@ -149,6 +173,9 @@ public class BasicUtil {
         LOGGER.info("Completed the prepare phase.");
     }
 
+    /**
+     * 关闭服务
+     */
     public void tearDown() {
         LOGGER.info("Shutting down the Kafka Consumer.");
         for (KafkaConsumer consumer : consuemrMap.values()) {
@@ -170,6 +197,11 @@ public class BasicUtil {
         LOGGER.info("Completed the tearDown phase.");
     }
 
+
+    /**
+     * 获取端口
+     * @return
+     */
     private synchronized int getNextPort() {
         // generate a random port number between 49152 and 65535
         return randPortGen.nextInt(65535 - 49152) + 49152;
